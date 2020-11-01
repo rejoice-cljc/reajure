@@ -1,0 +1,2 @@
+{:lint-as
+ {reajure.impl.component/defc clojure.core/defn}}
