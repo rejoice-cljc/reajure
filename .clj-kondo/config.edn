@@ -1,2 +1,3 @@
 {:lint-as
- {reajure.impl.component/defc clojure.core/defn}}
+ {reajure.core/defc   clojure.core/defn
+  reajure.native/defc clojure.core/defn}}
