@@ -3,7 +3,7 @@
    #?(:cljs [cljs.test :refer [deftest testing is]]
       :clj  [clojure.test :refer [deftest testing is]])
    #?(:cljs [goog.object :as obj])
-   [reajure.stylesheet :as stylesheet]))
+   [reajure.native.stylesheet :as stylesheet]))
 
 (defn obj=
   "Checks whether two objects are equal to each other. 

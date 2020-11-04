@@ -1,4 +1,4 @@
-(ns reajure.stylesheet
+(ns reajure.native.stylesheet
   (:refer-clojure :exclude [compile])
   (:require [clojure.string :as str]))
 
