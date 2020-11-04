@@ -1,8 +1,9 @@
 {:paths ["lib/src"]
 
  :deps
- {org.rejoice-cljc/rewrap {:git/url "https://github.com/rejoice-cljc/rewrap.git"
-                           :sha "3220a2eecec1f9dac2518c67d3b59b0917c72498"}}
+ {cljs-bean/cljs-bean     {:mvn/version "1.6.0"}
+  org.rejoice-cljc/rewrap {:git/url "https://github.com/rejoice-cljc/rewrap.git"
+                           :sha "1cb1ee63c10f2c6a3ef272f50c98a8718f89cd64"}}
  :aliases
  {:local
   {:extra-paths ["lib/priv"]
