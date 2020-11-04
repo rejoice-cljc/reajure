@@ -1,5 +1,13 @@
 {:deps  {:aliases [:local :test]}
 
+
+ :target-defaults
+ {:browser-test
+  {:js-options
+   {:extensions [".web.js" ".js" ".json"]
+    :resolve {"react-native" {:target :npm
+                              :require "react-native-web"}}}}}
+ 
  :builds
  {:test {:target    :browser-test
          :test-dir  ".builds/test"

@@ -1,13 +1,12 @@
 {
   "private": true,
-  "scripts": {
-    "prepare": "install-peers"
-  },
   "peerDependencies": {
     "react": "^16.13.0"
   },
   "devDependencies": {
-    "install-peers-cli": "^2.2.0",
+    "react": "^16.13.1",
+    "react-dom": "16.13.1",
+    "react-native-web": "0.13",
     "shadow-cljs": "^2.9.4"
   }
 }
