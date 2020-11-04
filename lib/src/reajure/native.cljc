@@ -1,6 +1,7 @@
 (ns reajure.native
   (:require
    #?@(:cljs [[goog.object]
+              [cljs-bean.core]
               ["react" :as r]
               ["react-native" :as rn]]
        :clj [[rewrap.hiccup :as hiccup]
@@ -76,16 +77,20 @@
        ([decls] (fc* decls {}))
        ([decls opts]
         (binding [*opts* opts]
-          (let [{:keys [name docstr params eval-exprs return-expr]} (comp/conform decls)
-                styles-sym (gensym (str name "-styles"))
-                [element-expr styles-expr] (render-expr return-expr styles-sym)]
+          (let [{:keys [name docstr params body]} (comp/conform decls)
+                js-props?      (-> params first meta :tag (= 'js))
+                wrap-props     (if-not js-props? (fn [p] `(cljs-bean.core/bean ~p)) identity)
+                styles-sym     (gensym (str name "-styles"))
+                eval-exprs     (butlast body)
+                component-expr (last body)
+                [element-expr styles-expr] (render-expr component-expr styles-sym)]
             `(do
                (def ~styles-sym ~styles-expr)
                (def ~@(if docstr [name docstr] [name])
-                 ~(comp/generate name params eval-exprs element-expr)))))))
+                 ~(comp/generate [name docstr params eval-exprs element-expr]
+                                 {:wrap-props-param wrap-props})))))))
 
      (defmacro defc
        "Define fn component."
        [& decls]
        (fc* decls))))
-
