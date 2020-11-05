@@ -68,7 +68,8 @@
             (let [element-expr (compile-hiccup component-expr parse-props)]
               (if styles-sym
                 (let [styles       @styles
-                      styles-expr  `(reajure.native/createStyleSheet (cljs.core/clj->js ~styles))]
+                      styles-expr  (when (seq styles) 
+                                     `(reajure.native/createStyleSheet (cljs.core/clj->js ~styles)))]
                   [element-expr styles-expr])
                 element-expr))))))
 
@@ -85,7 +86,8 @@
                 component-expr (last body)
                 [element-expr styles-expr] (render-expr component-expr styles-sym)]
             `(do
-               (def ~styles-sym ~styles-expr)
+               ~(when styles-expr
+                   `(def ~styles-sym ~styles-expr))
                (def ~@(if docstr [name docstr] [name])
                  ~(comp/generate [name docstr params eval-exprs element-expr]
                                  {:wrap-props-param wrap-props})))))))
