@@ -6,6 +6,7 @@
               ["react-native" :as rn]]
        :clj [[rewrap.hiccup :as hiccup]
              [rewrap.component :as comp]
+             [rewrap.dev.refresh :as refresh]
              [reajure.native.stylesheet :as stylesheet]]))
   #?(:cljs (:require-macros [reajure.native])))
 
@@ -79,20 +80,33 @@
        ([decls opts]
         (binding [*opts* opts]
           (let [{:keys [name docstr params body]} (comp/conform decls)
+                comp-id (str *ns* "/" name)
+                {:keys [def-refresh init-refresh hookup-refresh]} (refresh/exprs* comp-id name body)
                 js-props?      (-> params first meta :tag (= 'js))
                 wrap-props     (if-not js-props? (fn [p] `(cljs-bean.core/bean ~p)) identity)
                 styles-sym     (gensym (str name "-styles"))
-                eval-exprs     (butlast body)
-                component-expr (last body)
+                eval-exprs     (cons hookup-refresh
+                                     (butlast body))
+                component-expr  (last body)
                 [element-expr styles-expr] (render-expr component-expr styles-sym)]
+            (println
+             (refresh/exprs* comp-id name body)
+               hookup-refresh
+             eval-exprs)
             `(do
-               ~(when styles-expr
-                   `(def ~styles-sym ~styles-expr))
+               ~def-refresh
+               ~@(when styles-expr
+                   [`(def ~styles-sym ~styles-expr)])
                (def ~@(if docstr [name docstr] [name])
                  ~(comp/generate [name docstr params eval-exprs element-expr]
-                                 {:wrap-props-param wrap-props})))))))
+                                 {:wrap-props-param wrap-props}))
+
+               ~init-refresh)))))
 
      (defmacro defc
        "Define fn component."
        [& decls]
        (fc* decls))))
+
+(comment 
+  (cons '("x") ["y"]))
