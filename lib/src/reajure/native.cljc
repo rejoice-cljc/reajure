@@ -1,9 +1,10 @@
 (ns reajure.native
   (:require
-   #?@(:cljs [[goog.object]
+   #?@(:cljs [["react" :as r]
+              ["react-native" :as rn]
+              [goog.object]
               [cljs-bean.core]
-              ["react" :as r]
-              ["react-native" :as rn]]
+              [rewrap.dev.refresh]]
        :clj [[rewrap.hiccup :as hiccup]
              [rewrap.component :as comp]
              [rewrap.dev.refresh :as refresh]
@@ -89,10 +90,6 @@
                                      (butlast body))
                 component-expr  (last body)
                 [element-expr styles-expr] (render-expr component-expr styles-sym)]
-            (println
-             (refresh/exprs* comp-id name body)
-               hookup-refresh
-             eval-exprs)
             `(do
                ~def-refresh
                ~@(when styles-expr
