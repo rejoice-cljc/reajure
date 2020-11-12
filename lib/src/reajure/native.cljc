@@ -28,15 +28,14 @@
        "Compile any hiccup in component `expr`.
         Accepts `parse-props` fn for parsing props before they're converted to js object."
        [expr parse-props]
-       (let [parsers (merge
+       (let [parsers (conj
                       (:parsers *opts*)
-                      ;; todo: have rewrap accept parser vector rather than map
-                      {any?    (fn [t p ch]
-                                 [t
-                                  (-> p
-                                      parse-props
-                                      comp/->props)
-                                  ch])})]
+                      [[any? (fn [t p ch]
+                               [t
+                                (-> p
+                                    parse-props
+                                    comp/->props)
+                                ch])]])]
          (hiccup/compile expr {:emitter emit-element
                                :parsers parsers})))
 
@@ -70,7 +69,7 @@
             (let [element-expr (compile-hiccup component-expr parse-props)]
               (if styles-sym
                 (let [styles       @styles
-                      styles-expr  (when (seq styles) 
+                      styles-expr  (when (seq styles)
                                      `(reajure.native/createStyleSheet (cljs.core/clj->js ~styles)))]
                   [element-expr styles-expr])
                 element-expr))))))
