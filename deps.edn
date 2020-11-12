@@ -1,4 +1,4 @@
-{:paths ["lib/src"]
+{:paths ["src"]
 
  :deps
  {cljs-bean/cljs-bean     {:mvn/version "1.6.0"}
@@ -6,12 +6,11 @@
                            :sha "1cb1ee63c10f2c6a3ef272f50c98a8718f89cd64"}}
  :aliases
  {:local
-  {:extra-paths ["lib/priv"]
-   :extra-deps
+  {:extra-deps
    {binaryage/devtools        {:mvn/version "0.9.10"}
     thheller/shadow-cljs      {:mvn/version "2.11.0"}}}
 
   :test
-  {:extra-paths ["lib/test"]
+  {:extra-paths ["test"]
    :extra-deps
    {lambdaisland/kaocha     {:mvn/version "0.0-554"}}}}}

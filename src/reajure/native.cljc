@@ -103,6 +103,3 @@
        "Define fn component."
        [& decls]
        (fc* decls))))
-
-(comment 
-  (cons '("x") ["y"]))

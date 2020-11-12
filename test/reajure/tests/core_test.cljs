@@ -1,4 +1,4 @@
-(ns reajure.core-test
+(ns reajure.tests.core-test
   {:clj-kondo/config '{:linters {:inline-def {:level :off}}}}
   (:require [cljs.test :refer [deftest testing is]]
             [reajure.core :as rj]))

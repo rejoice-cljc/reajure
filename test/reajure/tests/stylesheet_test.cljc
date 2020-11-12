@@ -1,4 +1,4 @@
-(ns reajure.stylesheet-test
+(ns reajure.tests.stylesheet-test
   (:require
    #?(:cljs [cljs.test :refer [deftest testing is]]
       :clj  [clojure.test :refer [deftest testing is]])

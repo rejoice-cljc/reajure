@@ -32,3 +32,11 @@
    [txt
     {:style (k p :style)}
     (k p :children)]])
+
+(defc ipt
+  "Label component."
+  [^js p]
+  ;; (println "props.." p)
+  [rn/TextInput
+  ;;  {:style (k p :style)}
+   (k p :children)])
